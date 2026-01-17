@@ -1,0 +1,5 @@
+export { default as SedanSVG } from '../../components/tipoAutos/SedanSVG'
+export { default as VehicleSVG } from '../../components/tipoAutos/autoSVG'
+export { default as SuvSVG } from '../../components/tipoAutos/SuvSVG'
+export { default as PickupSVG } from '../../components/tipoAutos/PickupSVG'
+export { default as DeportivoSVG } from '../../components/tipoAutos/DeportivoSVG'

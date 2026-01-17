@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+//  output   = "../node_modules/@prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  usuario String?  @unique
+  password String
+  name  String?
+  apellido  String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  ventas    Venta[]
+  comments Comment[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Cliente {
+  id    Int     @id @default(autoincrement())
+  celular String?  @unique
+  nombre  String?
+  apellido  String?
+  createdAt DateTime @default(now())
+  autos     Auto[]
+  ventas    Venta[]
+}
+
+model Auto {
+  id    Int     @id @default(autoincrement())
+  placa String?  @unique
+  marca  String?
+  modelo  String?
+  color  String?
+  tipo  String?
+  contadorVenta Int @default(0)
+  createdAt DateTime @default(now())
+  clienteId Int      // Campo que guarda el ID del dueño en la BD
+  cliente   Cliente  @relation(fields: [clienteId], references: [id])
+  ventas    Venta[]
+}
+
+model Servicio {
+  id    Int     @id @default(autoincrement())
+  nombre String  @unique
+  descripcion  String?
+  costo    Int
+  createdAt DateTime @default(now())
+  ventas    Venta[]
+}
+
+model Etapa {
+  id    Int     @id @default(autoincrement())
+  nombre String  @unique
+  descripcion  String?
+  ventas    Venta[]
+}
+
+model Venta {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  contadorPromocion    Int
+  descuento    Int    @default(0) // Cantidad de dinero descontada
+  esPromocion  Boolean    @default(false)
+  
+  // Relación con Usuario (quién registró)
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+
+  // Relación con Cliente
+  clienteId    Int
+  cliente      Cliente    @relation(fields: [clienteId], references: [id])
+
+  // Relación con Auto
+  autoId       Int
+  auto         Auto       @relation(fields: [autoId], references: [id])
+
+  // Relación con el Servicio
+  servicioId Int
+  servicio   Servicio @relation(fields: [servicioId], references: [id])
+
+  // Precio final (se guarda por si el precio del catálogo cambia en el futuro)
+  total        Int   
+
+  // Relación con el Servicio
+  etapaId Int @default(1)
+  etapa   Etapa @relation(fields: [etapaId], references: [id]) 
+}
