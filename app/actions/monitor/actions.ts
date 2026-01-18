@@ -10,6 +10,7 @@ export type VehicleType =
   | 'suv'
   | 'pickup'
   | 'deportivo'
+  | 'suv2'
 
 export async function getAutoStatus(): Promise<AutoStatus[]> {
   const res = await fetch('/api/autoEstatus/', {
