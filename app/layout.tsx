@@ -1,4 +1,24 @@
+// app/layout.tsx
 import './globals.css'
+import { Providers } from './providers'
+import { Toaster } from 'sonner' // 1. Importas el componente
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="es">
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+        
+        {/* 2. Agregas el Toaster aquí */}
+        {/* richColors hace que el éxito sea verde y el error rojo */}
+        <Toaster position="top-right" richColors closeButton />
+      </body>
+    </html>
+  )
+}
+/*import './globals.css'
 import { Providers } from './providers'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -12,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   )
 }
+
 /*v2
 import './globals.css'
 import Sidebar from './components/Sidebar'

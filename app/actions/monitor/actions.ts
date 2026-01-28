@@ -1,16 +1,16 @@
 export type AutoStatus = {
   id: number
-  tipo: VehicleType
+  tipo: string//VehicleType
   color: string
   etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado'
 }
 
-export type VehicleType =
-  | 'sedan'
+/*export type VehicleType =
+  | 'Sedan'
   | 'suv'
   | 'pickup'
   | 'deportivo'
-  | 'suv2'
+  | 'suv2'*/
 
 export async function getAutoStatus(): Promise<AutoStatus[]> {
   const res = await fetch('/api/autoEstatus/', {

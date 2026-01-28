@@ -70,6 +70,7 @@ model Servicio {
   costo    Int
   createdAt DateTime @default(now())
   ventas    Venta[]
+  etapa    ServicioEtapa[]
 }
 
 model Etapa {
@@ -77,6 +78,20 @@ model Etapa {
   nombre String  @unique
   descripcion  String?
   ventas    Venta[]
+  servicio    ServicioEtapa[]
+}
+
+model ServicioEtapa {
+  servicioId    Int
+  servicio      Servicio    @relation(fields: [servicioId], references: [id])
+
+  etapaId    Int
+  etapa      Etapa    @relation(fields: [etapaId], references: [id])
+
+  orden    Int
+  
+  @@id([servicioId, etapaId])          // PK compuesta
+  @@unique([servicioId, orden])        // evita dos etapas con mismo orden
 }
 
 model Venta {
@@ -108,4 +123,11 @@ model Venta {
   // Relación con el Servicio
   etapaId Int @default(1)
   etapa   Etapa @relation(fields: [etapaId], references: [id]) 
+}
+
+model TipoAuto {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique 
+  carroceria  String   
+  imagen      String?  
 }

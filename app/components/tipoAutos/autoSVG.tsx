@@ -5,21 +5,21 @@ import SuvSVG from './SuvSVG'
 import Suv2SVG from './Suv2SVG'
 import PickupSVG from './PickupSVG'
 import DeportivoSVG from './DeportivoSVG'
-import { VehicleType } from '../../actions/monitor/actions'
+//import { VehicleType } from '../../actions/monitor/actions'
 
 type Props = {
-  tipo: VehicleType
+  tipo: string//VehicleType
   color: string
   etapa: 'Lavado' | 'Interiores' | 'Secado' | 'Terminado'
 }
 
 export default function VehicleSVG({ tipo, color, etapa }: Props) {
   switch (tipo) {
-    case 'sedan':
+    case 'Sedan':
       return <SedanSVG color={color} etapa={etapa} />
     case 'suv':
       return <SuvSVG color={color} etapa={etapa} />
-    case 'suv2':
+    case 'Suv2':
       return <Suv2SVG color={color} etapa={etapa} />
     case 'pickup':
       return <PickupSVG color={color} etapa={etapa} />

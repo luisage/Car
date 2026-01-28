@@ -95,7 +95,7 @@ export default async function HistorialPage({
               <th className="p-4 text-xs font-bold text-gray-500 uppercase">Cliente / Auto</th>
               <th className="p-4 text-xs font-bold text-gray-500 uppercase">Servicio</th>
               <th className="p-4 text-xs font-bold text-gray-500 uppercase">Atendió</th>
-              <th className="p-4 text-xs font-bold text-gray-500 uppercase text-right">Monto</th>
+              <th className="p-4 text-xs font-bold text-gray-500 uppercase text-right">Etapa</th>
               <th className="p-4 text-xs font-bold text-gray-500 uppercase text-center">Acción</th>
             </tr>
           </thead>
@@ -110,9 +110,12 @@ export default async function HistorialPage({
                   <p className="text-xs text-blue-600 font-mono">{v.auto.placa}</p>
                 </td>
                 <td className="p-4 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${v.contadorPromocion === 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
-                    {v.servicio.nombre} {v.contadorPromocion === 5 && "🎁"}
-                  </span>
+                  <p className="font-bold text-gray-900">{v.servicio.nombre}</p>
+                  <p className="text-xs text-blue-600 font-mono">{Number(v.total) === 0 ? (
+                    <span className="text-green-600 italic">Gratis</span>
+                    ) : (
+                    `$${Number(v.total).toFixed(2)}`
+                    )}</p>
                 </td>
                 <td className="p-4 text-sm text-gray-600">{v.user.name}</td>
                 <td className="p-4 text-right font-bold">

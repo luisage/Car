@@ -1,14 +1,16 @@
 'use client'
 import { useActionState, useEffect, useRef } from 'react'; // O useFormState de 'react-dom'
 import { addClienteConAuto } from '../../actions/clientes/actions';
-import { Servicio } from '../../generated/prisma/client';
+import { Servicio, TipoAuto } from '../../generated/prisma/client';
 import ColorPickerInput from '../../components/Clientes/ColorPicker';
+import SelectorTipoAuto from '../../components/SelectorTipoAuto/SelectorTipoAuto';
 
 interface Props {
   servicios: Servicio[];
+  modelos: TipoAuto[];
 }
 
-export default function FormCliente({ servicios }: Props) {
+export default function FormCliente({ servicios, modelos}: Props) {
   // state contendrá el error o el success que devuelva la acción
   const [state, formAction, isPending] = useActionState(addClienteConAuto, null);
   const inputStyle = "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none";
@@ -43,7 +45,11 @@ export default function FormCliente({ servicios }: Props) {
       <input name="placa" placeholder="Placa" className={inputStyle} required />
       <input name="marca" placeholder="Marca (Ej: Toyota)" className={inputStyle} required />
       <input name="modelo" placeholder="Modelo (Ej: Corolla)" className={inputStyle} required />
-      <input name="tipo" placeholder="Tipo" className={inputStyle} required />
+      <div className="flex flex-col gap-1">
+  <p className="text-xs font-bold text-gray-400 uppercase">Tipo de Carrocería</p>
+  <SelectorTipoAuto modelos={modelos} />
+</div>
+      
       {/* Dentro de FormCliente.tsx */}
 <div className="flex flex-col gap-1">
   <label className="text-xs font-bold text-gray-400 uppercase">Color del Vehículo</label>

@@ -23,7 +23,7 @@ if (!ventas.length) {
     return NextResponse.json(null)
   }
 
-  const venta = ventas[0]
+  //const venta = ventas[0]
 
   const response = ventas.map((venta) => ({
     id: venta.id,

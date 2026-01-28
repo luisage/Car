@@ -138,6 +138,26 @@ export async function addVentaExistente(prevState: any, formData: FormData) {
   revalidatePath('/clientes');
   return { success: true, contador: nuevoContador };
 }
+
+export async function addNuevoAuto(formData: FormData) {
+  const clienteId = Number(formData.get('clienteId'));
+  const placa = formData.get('placa') as string;
+  const marca = formData.get('marca') as string;
+  const modelo = formData.get('modelo') as string;
+  const color = formData.get('color') as string;
+
+  await prisma.auto.create({
+    data: {
+      placa: placa.toUpperCase(),
+      marca,
+      modelo,
+      color,
+      clienteId
+    }
+  });
+
+  revalidatePath('/clientes'); // O la ruta donde esté tu lista
+}
 /*
 await prisma.cliente.create({
         data: {

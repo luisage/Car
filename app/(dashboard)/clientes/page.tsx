@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import Search from '../../components/Search';
 import FormCliente from '../../components/Clientes/FormClientes'
 import BtnVentaRapida from '../../components/Clientes/BtnVentaRapida'
+import ModalNuevoAuto from '../../components/Clientes/ModalNuevoAuto'
 
 export default async function ClientesPage({
   searchParams,
@@ -32,6 +33,10 @@ export default async function ClientesPage({
     orderBy: { nombre: 'asc' }
   });
 
+  const modelosAutos = await prisma.tipoAuto.findMany({
+  orderBy: { carroceria: 'asc' }
+  });
+
   /*const servicios = serviciosDB.map(servicio => ({
   costo: servicio.costo.toString() // <--- Esto soluciona el error
     }));*/
@@ -49,7 +54,7 @@ export default async function ClientesPage({
           <section className="lg:col-span-1">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 sticky top-10">
               
-                <FormCliente servicios={servicios}/>  
+                <FormCliente servicios={servicios} modelos={modelosAutos}/>  
             </div>
           </section>
 
@@ -69,45 +74,50 @@ export default async function ClientesPage({
                         <h3 className="font-bold text-gray-900">{cliente.nombre}</h3>
                         <p className="text-sm text-gray-500">{cliente.celular || 'Sin teléfono'}</p>
                       </div>
-                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">
-                        {cliente.autos.length} Auto(s)
-                      </span>
+                      <div className="flex items-center">
+    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">
+      {cliente.autos.length} Auto(s)
+    </span>
+    {/* AGREGAMOS EL BOTÓN AQUÍ */}
+    <ModalNuevoAuto clienteId={cliente.id} modelos={modelosAutos} />
+  </div>
                     </div>
                     
                     {/* Lista de autos del cliente */}
-                    <div className="mt-3 pt-3 border-t border-gray-200 flex gap-2">
+                    <div className="mt-3 pt-3 border-t border-gray-200 flex flex-col gap-3">
                       {cliente.autos.map(auto => {
-  const ultimoContador = auto.ventas[0]?.contadorPromocion || 0;
+                      const ultimoContador = auto.ventas[0]?.contadorPromocion || 0;
   
-  return (
-    <div key={auto.id} className="text-xs bg-white p-2 rounded border flex flex-col justify-between w-40">
-      <div>
-        <p className="font-bold text-blue-600">{auto.placa}</p>
-        <p className="text-gray-500 uppercase text-[10px]">{auto.marca} {auto.modelo}</p>
-        
-        {/* Barra de Progreso visual */}
-        <div className="mt-2 mb-1 flex gap-1">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div 
-              key={i} 
-              className={`h-1.5 w-full rounded-full ${i <= ultimoContador ? (i === 5 ? 'bg-yellow-400' : 'bg-green-500') : 'bg-gray-200'}`}
-            />
-          ))}
-        </div>
-        <p className="text-[9px] text-gray-400 text-center">
-          {ultimoContador === 5 ? '¡Próximo es GRATIS!' : `Lavado ${ultimoContador} de 5`}
-        </p>
-      </div>
+                      return (
+                        <div key={auto.id} className="text-xs bg-white p-2 rounded border border-gray-300 flex items-center justify-between w-full">
+                          <div className="flex-1">
+                            <div className="flex items-baseline gap-2 mb-1">
+                              <p className="font-bold text-blue-600">{auto.placa}</p>
+                              <p className="text-gray-500 uppercase text-[10px]">{auto.marca} {auto.modelo}</p>
+                            </div>
+                            {/* Barra de Progreso visual */}
+                            <div className="flex items-center gap-3">
+                              <div className="flex gap-1 w-32">
+                                {[1, 2, 3, 4, 5].map((i) => (
+                                <div key={i} className={`h-2 w-full rounded-full ${
+                                  i <= ultimoContador ? (i === 5 ? 'bg-yellow-400' : 'bg-green-500') : 'bg-gray-100'
+                                  }`}
+                                />
+                                ))}
+                              </div>
+                              <p className="text-[11px] text-gray-400 font-medium">
+                              {ultimoContador === 5 ? '¡Próximo es GRATIS!' : `Lavado ${ultimoContador} de 5`}
+                              </p>
+                            </div>
+                          </div>
 
-      {/* Botón para nueva venta */}
-      <BtnVentaRapida 
-        autoId={auto.id} 
-        clienteId={cliente.id} 
-        servicios={servicios} 
-      />
-    </div>
-  )
-})}
+                          {/* Botón para nueva venta */}
+                          <div className="flex flex-col gap-2 min-w-[180px]">
+                            <BtnVentaRapida autoId={auto.id} clienteId={cliente.id} servicios={servicios}/>
+                          </div>
+                        </div>
+                      )
+                      })}
                     </div>
                   </div>
                 ))}
