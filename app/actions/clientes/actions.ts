@@ -158,6 +158,51 @@ export async function addNuevoAuto(formData: FormData) {
 
   revalidatePath('/clientes'); // O la ruta donde esté tu lista
 }
+
+export async function updateCliente(id: number, formData: FormData) {
+  const nombre = formData.get('nombre') as string
+  const celular = formData.get('celular') as string
+
+  await prisma.cliente.update({
+    where: { id },
+    data: { nombre, celular }
+  })
+  revalidatePath('/clientes')
+}
+
+export async function updateAuto(autoId: number, formData: FormData) {
+  try {
+    // 1. Extraemos los datos del formulario
+    const placa = formData.get('placa') as string
+    const marca = formData.get('marca') as string
+    const modelo = formData.get('modelo') as string
+    //const tipo = parseInt(formData.get('tipoAutoId') as string)
+    const tipo = formData.get('tipo') as string
+    const color = formData.get('color') as string // Asegúrate que tu ColorPickerInput envíe el valor en un input hidden o con name='color'
+
+    // 2. Ejecutamos la actualización en Prisma
+    await prisma.auto.update({
+      where: {
+        id: autoId,
+      },
+      data: {
+        placa: placa.toUpperCase(),
+        marca,
+        modelo,
+        tipo,
+        color,
+      },
+    })
+
+    // 3. Refrescamos la página para que los cambios se vean reflejados
+    revalidatePath('/clientes')
+
+    return { success: true }
+  } catch (error) {
+    console.error("Error al actualizar el auto:", error)
+    return { error: 'No se pudo actualizar el auto' }
+  }
+}
 /*
 await prisma.cliente.create({
         data: {

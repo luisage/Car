@@ -10,12 +10,12 @@ export default function TicketVenta({ venta }: { venta: any }) {
       {/* Botón que se ve en la pantalla */}
       <button 
         onClick={imprimir}
-        className="text-gray-400 hover:text-blue-600 transition-colors p-1"
+        className="w-full text-left px-4 py-3 text-sm text-gray-600 hover:bg-gray-100 flex items-center gap-3 transition-colors"
         title="Imprimir Ticket"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span className="text-lg"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 25 25" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9v4a2 2 0 00-2 2v2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-        </svg>
+        </svg></span> Imprimir ticket
       </button>
 
       {/* Contenido que SOLO se imprime */}

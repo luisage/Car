@@ -3,7 +3,8 @@ import { prisma } from '@/lib/prisma';
 import Search from '../../components/Search';
 import FormCliente from '../../components/Clientes/FormClientes'
 import BtnVentaRapida from '../../components/Clientes/BtnVentaRapida'
-import ModalNuevoAuto from '../../components/Clientes/ModalNuevoAuto'
+import MenuAccionesCliente from '../../components/Clientes/MenuAccionesCliente'
+import MenuAccionesAuto from '../../components/Clientes/MenuAccionesAuto'
 
 export default async function ClientesPage({
   searchParams,
@@ -74,12 +75,13 @@ export default async function ClientesPage({
                         <h3 className="font-bold text-gray-900">{cliente.nombre}</h3>
                         <p className="text-sm text-gray-500">{cliente.celular || 'Sin teléfono'}</p>
                       </div>
-                      <div className="flex items-center">
+                      <div className="flex items-center gap-3">
     <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">
       {cliente.autos.length} Auto(s)
     </span>
-    {/* AGREGAMOS EL BOTÓN AQUÍ */}
-    <ModalNuevoAuto clienteId={cliente.id} modelos={modelosAutos} />
+    {/* AGREGAMOS EL BOTÓN AQUÍ 
+    <ModalNuevoAuto clienteId={cliente.id} modelos={modelosAutos} /> */}
+    <MenuAccionesCliente cliente={cliente} modelos={modelosAutos} />
   </div>
                     </div>
                     
@@ -94,6 +96,7 @@ export default async function ClientesPage({
                             <div className="flex items-baseline gap-2 mb-1">
                               <p className="font-bold text-blue-600">{auto.placa}</p>
                               <p className="text-gray-500 uppercase text-[10px]">{auto.marca} {auto.modelo}</p>
+                              <MenuAccionesAuto auto={auto} modelos={modelosAutos} />
                             </div>
                             {/* Barra de Progreso visual */}
                             <div className="flex items-center gap-3">

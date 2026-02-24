@@ -4,7 +4,7 @@ import { motion, AnimatePresence  } from 'framer-motion'
 type SuvSVGProps = {
   color: string
   //etapa: 'proceso' | 'enjabonado' | 'terminado'
-  etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado'
+  etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado'  | 'Mojado' | 'Enjabonado' | 'Enjuague'  | 'En espera'
 }
 
 export default function SuvSVG({ color, etapa }: SuvSVGProps) {

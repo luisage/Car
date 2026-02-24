@@ -2,7 +2,14 @@ export type AutoStatus = {
   id: number
   tipo: string//VehicleType
   color: string
-  etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado'
+  etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado' | 'Mojado' | 'Enjabonado' | 'Enjuague'  | 'En espera'
+  etapaOrden: number
+  totalEtapas: number
+  etapas: {
+    id: number
+    nombre: string
+    orden: number
+  }[]
 }
 
 /*export type VehicleType =

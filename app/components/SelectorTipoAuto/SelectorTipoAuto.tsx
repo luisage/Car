@@ -2,10 +2,17 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-export default function SelectorTipoAuto({ modelos }: { modelos: any[] }) {
+export default function SelectorTipoAuto({ modelos, defaultValue }: { modelos: any[]; defaultValue?: string; }) {
   const [isOpen, setIsOpen] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [seleccionado, setSeleccionado] = useState("");
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSeleccionado(defaultValue);
+      
+    }
+  }, [defaultValue, modelos]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -41,7 +48,7 @@ export default function SelectorTipoAuto({ modelos }: { modelos: any[] }) {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/50 backdrop-blur-md">
           <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl animate-in zoom-in duration-200">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Catálogo de Autos</h2>

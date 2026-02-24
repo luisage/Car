@@ -5,12 +5,13 @@ import SuvSVG from './SuvSVG'
 import Suv2SVG from './Suv2SVG'
 import PickupSVG from './PickupSVG'
 import DeportivoSVG from './DeportivoSVG'
+import ConvertibleSVG from './ConvertibleSVG'
 //import { VehicleType } from '../../actions/monitor/actions'
 
 type Props = {
   tipo: string//VehicleType
   color: string
-  etapa: 'Lavado' | 'Interiores' | 'Secado' | 'Terminado'
+  etapa: 'Lavado' | 'Interiores' | 'Secado' | 'Terminado'  | 'Mojado' | 'Enjabonado' | 'Enjuague' | 'En espera'
 }
 
 export default function VehicleSVG({ tipo, color, etapa }: Props) {
@@ -21,10 +22,12 @@ export default function VehicleSVG({ tipo, color, etapa }: Props) {
       return <SuvSVG color={color} etapa={etapa} />
     case 'Suv2':
       return <Suv2SVG color={color} etapa={etapa} />
-    case 'pickup':
+    case 'Pickup':
       return <PickupSVG color={color} etapa={etapa} />
-    case 'deportivo':
+    case 'Deportivo':
       return <DeportivoSVG color={color} etapa={etapa} />
+    case 'Convertible':
+      return <ConvertibleSVG color={color} etapa={etapa} />
     default:
       return null
   }

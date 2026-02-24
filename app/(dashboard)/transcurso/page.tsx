@@ -14,7 +14,7 @@ const [autos, setAutos] = useState<AutoStatus[]>([])
     const fetchData = async () => {
       const data = await getAutoStatus()
       console.log('DATA FROM API:', data, Array.isArray(data))
-      setAutos(data)
+      setAutos(Array.isArray(data) ? data : [])
     }
 
     fetchData()

@@ -89,7 +89,7 @@ model ServicioEtapa {
   etapa      Etapa    @relation(fields: [etapaId], references: [id])
 
   orden    Int
-  
+
   @@id([servicioId, etapaId])          // PK compuesta
   @@unique([servicioId, orden])        // evita dos etapas con mismo orden
 }
@@ -100,6 +100,7 @@ model Venta {
   contadorPromocion    Int
   descuento    Int    @default(0) // Cantidad de dinero descontada
   esPromocion  Boolean    @default(false)
+  estatus    String   @default("Activa")
   
   // Relación con Usuario (quién registró)
   userId    Int

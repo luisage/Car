@@ -5,7 +5,7 @@ import SelectorTipoAuto from '../SelectorTipoAuto/SelectorTipoAuto';
 import ColorPickerInput from './ColorPicker';
 import { toast } from 'sonner';
 
-export default function ModalNuevoAuto({ clienteId, modelos }: { clienteId: number, modelos: any[] }) {
+export default function ModalNuevoAuto({ clienteId, modelos, onClose}: { clienteId: number, modelos: any[], onClose: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
@@ -23,16 +23,7 @@ export default function ModalNuevoAuto({ clienteId, modelos }: { clienteId: numb
   };
 
   return (
-    <>
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="ml-2 bg-green-500 hover:bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-lg font-bold transition-colors"
-        title="Agregar nuevo auto"
-      >
-        +
-      </button>
-
-      {isOpen && (
+    
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <form action={handleSubmit} 
                 className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl animate-in zoom-in duration-200">
@@ -55,7 +46,7 @@ export default function ModalNuevoAuto({ clienteId, modelos }: { clienteId: numb
             </div>
 
             <div className="flex gap-2 mt-6">
-              <button type="button" onClick={() => setIsOpen(false)} className="flex-1 py-2 text-gray-500 font-bold">Cancelar</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 border border-gray-300 rounded-md hover:bg-gray-50">Cancelar</button>
               <button type="submit" disabled={isPending} className={`flex-1 py-2 rounded-lg font-bold text-white transition-all ${
                   isPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
                 }`}
@@ -64,7 +55,7 @@ export default function ModalNuevoAuto({ clienteId, modelos }: { clienteId: numb
             </div>
           </form>
         </div>
-      )}
-    </>
+      
+    
   );
 }
