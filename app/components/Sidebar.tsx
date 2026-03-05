@@ -1,6 +1,6 @@
 'use client'
 import { signOut, useSession } from 'next-auth/react'
-import { LogOut, User as UserIcon, Menu, X, Users, Settings, BarChart3, Home, BanknoteArrowDown, ClipboardClock } from 'lucide-react'
+import { LogOut, User as UserIcon, Menu, X, Users, Settings, BarChart3, Home, ClipboardList, ClipboardCopy, Monitor } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -94,15 +94,15 @@ export default function Sidebar() {
           )}
 
           <Link href="/clientes" onClick={() => setIsOpen(false)}>
-            <NavItem icon={<ClipboardClock size={18} />} label="Clientes" active={pathname === '/clientes'} />
+            <NavItem icon={<ClipboardCopy size={18} />} label="Clientes" active={pathname === '/clientes'} />
           </Link>
 
           <Link href="/ventas" onClick={() => setIsOpen(false)}>
-            <NavItem icon={<BanknoteArrowDown size={18} />} label="Ventas" active={pathname === '/ventas'} />
+            <NavItem icon={<ClipboardList size={18} />} label="Ventas" active={pathname === '/ventas'} />
           </Link>
 
           <Link href="/transcurso" onClick={() => setIsOpen(false)}>
-            <NavItem icon={<ClipboardClock size={18} />} label="Sala de espera" active={pathname === '/transcurso'} />
+            <NavItem icon={<Monitor size={18} />} label="Monitoreo" active={pathname === '/transcurso'} />
           </Link>
 
           <Link href="/configuracion" onClick={() => setIsOpen(false)}>

@@ -1,5 +1,44 @@
 // app/configuracion/page.tsx
-export default function ConfiguracionPage() {
+import { Settings } from 'lucide-react';
+import { prisma } from '@/lib/prisma';
+import TabsConfiguracion from '../../components/Configuracion/tabsConfiguracion';
+
+export default async function ConfiguracionPage() {
+  // Ahora sí puedes usar Prisma aquí
+  const servicios = await prisma.servicio.findMany({ 
+    include: {
+    etapa: {
+      include: {
+        etapa: true
+      }
+    }
+  },
+  orderBy: { id: 'asc' }
+   });
+  const etapas = await prisma.etapa.findMany({ orderBy: { id: 'asc' } });
+
+  const noticias = await prisma.noticias.findMany({ orderBy: { id: 'desc' } });
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="max-w-5xl mx-auto">
+        <header className="mb-8 flex items-center gap-3">
+          <div className="p-2 bg-blue-600 rounded-lg text-white">
+            <Settings size={24} />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Configuración del Sistema</h1>
+            <p className="text-gray-600">Administra el catálogo de servicios y flujo de trabajo.</p>
+          </div>
+        </header>
+
+        {/* Pasamos los datos al componente de cliente */}
+        <TabsConfiguracion serviciosIniciales={servicios} etapasIniciales={etapas} noticiasIniciales={noticias}/>
+      </div>
+    </div>
+  );
+}
+/*export default function ConfiguracionPage() {
   return (
     <div className="space-y-6">
       <header>
@@ -25,4 +64,4 @@ export default function ConfiguracionPage() {
       </div>
     </div>
   )
-}
+}*/

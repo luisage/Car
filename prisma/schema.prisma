@@ -132,3 +132,10 @@ model TipoAuto {
   carroceria  String   
   imagen      String?  
 }
+
+model Noticias {
+  id          Int      @id @default(autoincrement())
+  titulo      String    
+  descripcion  String   
+  estatus        Boolean  @default(true)
+}
