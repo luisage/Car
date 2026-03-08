@@ -1,7 +1,6 @@
 // actions.ts
 'use server'
 import { prisma } from '@/lib/prisma';
-import { Session } from 'inspector';
 import { revalidatePath } from 'next/cache';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -38,17 +37,6 @@ export async function addClienteConAuto(prevState: any, formData: FormData) {
   const [servicioId, costo] = servicioData.split('|');
 
   const contadorPromocion=1;
-
-  /*if (celular) {
-    const clienteExistente = await prisma.cliente.findUnique({
-      where: { celular: celular } // Recuerda que en Prisma el campo debe ser @unique
-    });
-
-    if (clienteExistente) {
-      // Aquí puedes lanzar un error o retornar un objeto con el mensaje
-      return { error: "Este teléfono ya pertenece a otro cliente registrado." };
-    }
-  }*/
 
   try {
     const telExiste = await prisma.cliente.findUnique({ where: { celular } });
@@ -203,30 +191,3 @@ export async function updateAuto(autoId: number, formData: FormData) {
     return { error: 'No se pudo actualizar el auto' }
   }
 }
-/*
-await prisma.cliente.create({
-        data: {
-        nombre,
-        apellido,
-        celular,
-        autos: {
-            create: {
-            placa,
-            marca,
-            modelo,
-            color,
-            tipo,
-                ventas: {
-                    create: {
-                    // Aquí guardamos la relación y el costo histórico
-                    servicioId: parseInt(servicioId), 
-                    total: parseFloat(costo),
-                    clienteId:0,
-                    contadorPromocion,
-                    userId: session?.user.id, // ID del cajero/admin
-              }
-            }
-            }
-        }
-        }
-    });*/

@@ -1,13 +1,13 @@
 'use client'
 import { motion, AnimatePresence  } from 'framer-motion'
 
-type SuvSVGProps = {
+type SedanSVGProps = {
   color: string
   //etapa: 'proceso' | 'enjabonado' | 'terminado'
   etapa: 'Lavado' | 'Interiores' | 'Secado'| 'Terminado'  | 'Mojado' | 'Enjabonado' | 'Enjuague'  | 'En espera'
 }
 
-export default function SuvSVG({ color, etapa }: SuvSVGProps) {
+export default function SedanSVG({ color, etapa }: SedanSVGProps) {
   return (
     <svg viewBox="0 0 500 550"
       className="w-full max-w-[500px] mx-auto">
